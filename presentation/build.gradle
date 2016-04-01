@@ -1,0 +1,55 @@
+plugins {
+  id 'org.asciidoctor.convert' version '1.5.3'
+  id 'com.github.jruby-gradle.base' version '0.1.5'
+}
+
+apply plugin: 'com.github.jruby-gradle.base'
+apply plugin: 'java'
+apply plugin: 'org.asciidoctor.convert'
+
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  gems 'rubygems:slim:3.0.6'
+  gems 'rubygems:thread_safe:0.3.5'
+}
+
+asciidoctor {
+
+  dependsOn jrubyPrepareGems
+
+  sources {
+    include 'samlsso.adoc'
+  }
+
+  resources {
+    from (sourceDir) {
+      include 'images/**'
+      include 'reveal.js/**'
+    }
+  }
+
+  backends 'revealjs'
+
+  attributes 'build-gradle': file('build.gradle'),
+             'sourcedir': project.sourceSets.main.java.srcDirs[0],
+             'endpoint-url': 'http://example.org',
+             'source-highlighter': 'coderay',
+             'imagesdir': './images',
+             'toc': 'left',
+             'icons': 'font',
+             'setanchors': '',
+             'idprefix': '',
+             'idseparator': '-',
+             'docinfo1': '',
+             'revealjs_theme': 'black',
+             'revealjs_transition': 'linear',
+             'revealjs_history': 'true',
+             'revealjs_slideNumber': 'true'
+
+  options template_dirs : [new File('./templates/slim').absolutePath ]
+}

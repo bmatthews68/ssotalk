@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="author" content="Brian Matthews"><title>SSO with Spring Security SAML</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/solarized.css" id="theme"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section><h1>SSO with Spring Security SAML</h1><p><small>Brian Matthews</small></p></section><section id="_what_is_saml"><h2>What is SAML?</h2><div class="ulist"><ul><li><p>Service Assertion Markup Language</p><div class="ulist"><ul><li><p>SAML 2.0 around since 2005</p></li><li><p>Not backwards compatible with 1.x</p></li></ul></div></li><li><p>Service Providers (SP) / Relying Party</p></li><li><p>Identity Provider (IdP) / Asserting Party</p></li></ul></div></section>
+<section id="_what_is_saml_2"><h2>What is SAML?</h2><div class="imageblock" style=""><div class="content"><img src="diagrams/HL.png" alt="HL"></div></div></section>
+<section id="_authentication_vs_authorization"><h2>Authentication vs Authorization</h2><div class="ulist"><ul><li><p>SAML addresses on authentication via the IdP</p></li><li><p>SAML does not specifically address authorization</p><div class="ulist"><ul><li><p>SP specific logic leverages attribute assertions</p></li></ul></div></li></ul></div></section>
+<section id="_why_saml"><h2>Why SAML?</h2><div class="ulist"><ul><li><p>Standards based</p></li><li><p>Platform neutral</p><div class="ulist"><ul><li><p>Java, .NET, C/C++, Python, PERL, PHP</p></li></ul></div></li><li><p>Mix</p><div class="ulist"><ul><li><p>Bespoke applications</p></li><li><p>Vendor solutions</p></li><li><p>Managed services</p></li></ul></div></li><li><p>No vendor lock-in</p></li><li><p>Open source implementations</p></li></ul></div></section>
+<section id="_building_blocks"><h2>Building Blocks</h2><div class="ulist"><ul><li><p>XML technologies</p><div class="ulist"><ul><li><p>XML schema</p></li><li><p>XML digital signatures</p></li><li><p>XML encryption</p></li></ul></div></li><li><p>Hypertext Transfer Protocol (HTTP)</p></li><li><p>Simple Object Access Protocol (SOAP)</p></li></ul></div></section>
+<section id="_establish_trust"><h2>Establish trust</h2><div class="ulist"><ul><li><p>SPs and IdPs exchange metadata to establish trust</p><div class="ulist"><ul><li><p>Public keys for encryption and signing</p></li><li><p>Service end-points for protocols and bindings</p></li><li><p>Identifier and attribute formats</p></li></ul></div></li><li><p>Metadata should be signed using digital signatures</p></li></ul></div></section>
+<section id="_authentication"><h2>Authentication</h2><div class="ulist"><ul><li><p>Authentication happens at the IdP</p></li><li><p>IdP initiated</p><div class="ulist"><ul><li><p>User accesses IdP to login</p></li><li><p>Redirected to default URL for SP</p></li></ul></div></li><li><p>SP initiated</p><div class="ulist"><ul><li><p>User accceses protected SP resource</p></li><li><p>Redirected to IdP for login</p></li><li><p>Redirected back to protected SP resource</p></li></ul></div></li></ul></div></section>
+<section id="_identity_attributes"><h2>Identity &amp; Attributes</h2><div class="ulist"><ul><li><p>SAML assertion contains claims</p></li><li><p>Identity can be many formats (e.g. e-mail or username)</p></li><li><p>SP processes claims</p></li></ul></div></section>
+<section id="_use_cases"><h2>Use cases</h2><div class="ulist"><ul><li><p>Profiles</p><div class="ulist"><ul><li><p>Single Sign-on</p></li><li><p>Single Logout</p></li></ul></div></li><li><p>Enterprise Portal</p></li><li><p>B2B Cloud Service</p></li></ul></div></section>
+<section id="_enterprise_portal"><h2>Enterprise Portal</h2><div class="imageblock" style=""><div class="content"><img src="diagrams/UC1.png" alt="UC1"></div></div></section>
+<section id="_b2b_cloud_service"><h2>B2B Cloud Service</h2><div class="imageblock" style=""><div class="content"><img src="diagrams/UC2.png" alt="UC2"></div></div></section>
+<section id="_identity_providers"><h2>Identity Providers</h2><div class="ulist"><ul><li><p>Examples</p><div class="ulist"><ul><li><p>OpenAM (ForgeRock) / OpenSSO (Oracle/Sun)</p></li><li><p>Keycloak (Redhat)</p></li><li><p>Shibboleth</p></li><li><p>Okta</p></li><li><p>Mircrosoft ADFS (2.0+)</p></li></ul></div></li><li><p>OAuth 2 support</p></li><li><p>Social login</p></li></ul></div></section>
+<section id="_problems"><h2>Problems</h2><div class="ulist"><ul><li><p>Attribute mappings</p></li><li><p>Timetamps (need clocks synchornised)</p></li><li><p>Load balancing (SAML exchange is state-ful)</p></li><li><p>Certicates (hassle using unsigned certificates)</p></li></ul></div></section>
+<section><div class="paragraph"><p>Questions?</p></div></section>
+<section id="_demo"><h2>Demo</h2><div class="ulist"><ul><li><p>Spring Boot</p></li><li><p>Spring Security SAML 2</p></li><li><p>Keycloak</p></li><li><p>MongoDB</p></li><li><p>Docker</p></li></ul></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: false,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'solarized',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
