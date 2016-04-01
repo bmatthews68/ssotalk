@@ -1,0 +1,22 @@
+version: '2'
+services:
+  keycloak-app:
+    image: keycloak-app
+    ports:
+      - "8080:8080"
+    links:
+      - keycloak-db
+    depends_on:
+      - keycloak-db
+  keycloak-db:
+    image: mongo:3.2.3
+    volumes:
+      - ./keycloak-db/data:/data
+  memcached:
+    image: memcached
+    ports:
+      - "11211:11211"
+  web:
+    image: nginx
+    ports:
+      - "80:80"

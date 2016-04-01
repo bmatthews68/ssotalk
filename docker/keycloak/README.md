@@ -1,0 +1,72 @@
+Generate a self-signed certificate for the Keycloak server:
+
+```
+keytool -genkey -alias sso.btmatthews.com -keyalg RSA -keystore keycloak.jks -validity 10950 -dname "CN=sso.btmatthews.com,OU=btmatthews.com,O=Brian Matthews,L=Dublin,ST=Leinster,C=IE" -storepass everclear -keypass everclear
+```
+
+Export the certificate request:
+
+```
+keytool -certreq -alias sso.btmatthews.com -keystore keycloak.jks -storepass everclear -keypass everclear > keycloak.csr
+```
+
+```
+-----BEGIN NEW CERTIFICATE REQUEST-----
+MIIC9jCCAd4CAQAwgYAxCzAJBgNVBAYTAklFMREwDwYDVQQIEwhMZWluc3RlcjEPMA0GA1UEBxMG
+RHVibGluMRcwFQYDVQQKEw5CcmlhbiBNYXR0aGV3czEXMBUGA1UECxMOYnRtYXR0aGV3cy5jb20x
+GzAZBgNVBAMTEnNzby5idG1hdHRoZXdzLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBAM5Buf4Tlkv7laESNXnZB7kqCc1Am3kKdEiLW1CPzY0t+F6zgJD1T+Oj+OSoWYuhHLLGqAbv
+/0cK6ZSzFJ/9/0/KowBfKD0ciU+4Azdah5S5v3FrR6ZAhePSizptjs41cp9n1Cb9ftRNFYaJGFNn
+Q5LG7VeVQyMfquS1+2Zn5gJXOW6tp0Prc3RmqNjzmqivGD6wiV1RFbIg37Tp4VDtoHE4WweXOeu6
+vleXsmkmCmWcaWNl4MsKUSAeULGeQF7oHmXvboF5xQeZNX2yd7zy82JmRU4ywqQ5VbtKtYclJuQk
+y8L704KDSrMVMxF1w0VjxQ0akxF68sVfT4cuA2zH1nMCAwEAAaAwMC4GCSqGSIb3DQEJDjEhMB8w
+HQYDVR0OBBYEFIU0lD9kRU/G+2ItDydxdLkVCwJyMA0GCSqGSIb3DQEBCwUAA4IBAQB1UgEksWnV
+PHhKesAw3rXMKCnow4MDRy3jBdRaSkt4tkrTH1vsxvrTlCSdhBHjX0FfGOFA7Ur9+mJZx6+53yS6
+RqcJFYxu2Hehpxkd92JWlQGpfXiOO+++iFm9GhftiVltVeVOTKeWXjgnk+g9MUWvWFIcM6kNaXMW
+/XrHngtf3IB/d0Xll7rsOlLhwyCgxHrWAJimdTcYF/OrlYQa7QgXFE4I7HfuNNP2lBA7Up5116J6
+nHD5NYwgOBki83Zxy8rKxbVd9GTedCIfrbpxpi41LBuAh8RCOpjXC56tggqP+gKoGM9iQR8kW05+
+HwyzMEl/imMlNZSUSInQhTkmYj4w
+-----END NEW CERTIFICATE REQUEST-----
+```
+
+
+```
+-----BEGIN CERTIFICATE-----
+MIIFFTCCAv2gAwIBAgIDEdnKMA0GCSqGSIb3DQEBCwUAMHkxEDAOBgNVBAoTB1Jv
+b3QgQ0ExHjAcBgNVBAsTFWh0dHA6Ly93d3cuY2FjZXJ0Lm9yZzEiMCAGA1UEAxMZ
+Q0EgQ2VydCBTaWduaW5nIEF1dGhvcml0eTEhMB8GCSqGSIb3DQEJARYSc3VwcG9y
+dEBjYWNlcnQub3JnMB4XDTE2MDMxNTA1NTkyM1oXDTE2MDkxMTA1NTkyM1owHTEb
+MBkGA1UEAxMSc3NvLmJ0bWF0dGhld3MuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOC
+AQ8AMIIBCgKCAQEAzkG5/hOWS/uVoRI1edkHuSoJzUCbeQp0SItbUI/NjS34XrOA
+kPVP46P45KhZi6EcssaoBu//RwrplLMUn/3/T8qjAF8oPRyJT7gDN1qHlLm/cWtH
+pkCF49KLOm2OzjVyn2fUJv1+1E0VhokYU2dDksbtV5VDIx+q5LX7ZmfmAlc5bq2n
+Q+tzdGao2POaqK8YPrCJXVEVsiDftOnhUO2gcThbB5c567q+V5eyaSYKZZxpY2Xg
+ywpRIB5QsZ5AXugeZe9ugXnFB5k1fbJ3vPLzYmZFTjLCpDlVu0q1hyUm5CTLwvvT
+goNKsxUzEXXDRWPFDRqTEXryxV9Phy4DbMfWcwIDAQABo4IBADCB/TAMBgNVHRMB
+Af8EAjAAMA4GA1UdDwEB/wQEAwIDqDA0BgNVHSUELTArBggrBgEFBQcDAgYIKwYB
+BQUHAwEGCWCGSAGG+EIEAQYKKwYBBAGCNwoDAzAzBggrBgEFBQcBAQQnMCUwIwYI
+KwYBBQUHMAGGF2h0dHA6Ly9vY3NwLmNhY2VydC5vcmcvMDEGA1UdHwQqMCgwJqAk
+oCKGIGh0dHA6Ly9jcmwuY2FjZXJ0Lm9yZy9yZXZva2UuY3JsMD8GA1UdEQQ4MDaC
+EnNzby5idG1hdHRoZXdzLmNvbaAgBggrBgEFBQcIBaAUDBJzc28uYnRtYXR0aGV3
+cy5jb20wDQYJKoZIhvcNAQELBQADggIBACWNaF8JV/Y6F9rRNmdEBEUZyQdSRwu0
+Ep7Ma9VTgEavYnH4jmXex3/z6cZJHDhRNUOPoihNDu1dbCfwfe+ucv4rHDsHvz2E
+0R8rDjzBQ19ptwfwvau3bML20LsGeRNns+gK2U7PtLturCJYGHrfj7vX066UQOYr
+9wFw3fMWRqnud8jBpnJT1DWo8vGJ1IfnggbGbnQWjrvW1Pw9gqaGF00hT3N8rrot
+csqD/h9gvPglhg2ct6a5uaMNFBtmBMLfS1u3/4Z6vK9wwAcvakVyt3rZk+wS/Hov
+VWFAXMcejPQPHXVXk0vqwHG9zeVfswBE6bqzG9AROFxtkL9PSpGXWNy6kaV/z5fW
+jklvt9uA/+sXZyEBzyGEbA8nz3979F9jOJoNTux5y75g4HS80PPQ0Zfe/zRnecAT
+t5L74JcjAtuwYGfnCDLt/vZ/N1XqqG5IFalVU4PC41EqB1VX6TnUGJ4aWqJEZoaT
+57HzEFFE9oyvDZ4OXuBGFmv6FjhmFM3LJObc5yrpcTAcosENqQd41jCE1uFJc50O
+KktYSi9xloMiY7d1BIiWyY84T10oGpUo1c3yX1tZkkvPd99hRvNoM9pRzryh1Vg7
+g+Q9ofxVReppRJZkgArfbXYw6RO0nlzCh1ktoc/395WdUjWD8ri8pkClEMzFTf6p
+FiZzUmSJaSH6
+-----END CERTIFICATE-----
+```
+
+keytool -import -keystore keycloak.jks -file root.crt -alias root -storepass everclear -noprompt
+
+keytool -import -keystore keycloak.jks -file keycloak.crt -alias sso.btmatthews.com -storepass everclear
+
+```
+docker build -t keycloak .
+```
