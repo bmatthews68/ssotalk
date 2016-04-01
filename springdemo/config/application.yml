@@ -1,0 +1,19 @@
+memcached.servers: 192.168.99.100:11211
+keystore:
+  location: config/ssodemo.jks
+  password: everclear
+key:
+  alias: ssodemo.btmatthews.com
+  password: everclear
+idp:
+  metadata:
+    path: config/keycloak.xml
+sp:
+  id: ssodemo
+  base:
+    url: http://localhost:8080
+logging:
+  level:
+    org.springframework.security.saml: DEBUG
+    org.opensaml: DEBUG
+    PROTOCOL_MESSAGE: DEBUG
